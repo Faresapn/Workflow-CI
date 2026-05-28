@@ -1,0 +1,49 @@
+name: Workflow CI - Mushroom Classification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mlflow==3.1.4 scikit-learn==1.6.1 pandas==2.3.3 numpy==2.0.2 scipy==1.13.1 cloudpickle==3.1.2 psutil==7.2.2
+
+      - name: Run MLflow training
+        run: |
+          cd MLProject
+          mlflow run . --no-conda
+
+      - name: Upload MLflow artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlflow-runs
+          path: mlruns/
+          retention-days: 30
+
+      - name: Upload model artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-artifacts
+          path: |
+            *.pkl
+            *.csv
+          retention-days: 30

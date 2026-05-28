@@ -1,0 +1,14 @@
+mlruns/
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.DS_Store
+Thumbs.db
+*.log
+confusion_matrix.csv
