@@ -1,0 +1,13 @@
+# Grafana Contact Points Provisioning
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: default-email
+    receivers:
+      - uid: email-notification
+        type: email
+        settings:
+          addresses: "faresaprasetyon@gmail.com"
+          singleEmail: false
+        disableResolveMessage: false

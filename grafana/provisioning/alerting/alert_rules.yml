@@ -1,0 +1,46 @@
+# Grafana Alert Rules Provisioning
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: Mushroom ML Alerts
+    folder: ""
+    interval: 1m
+    rules:
+      - uid: high-error-rate-alert
+        title: High Error Rate Alert
+        condition: threshold
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: PBFA97CFB590B2093
+            model:
+              expr: "rate(inference_errors_total[5m])"
+              refId: "A"
+          - refId: threshold
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              refId: threshold
+              conditions:
+                - evaluator:
+                    params: [0.1]
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params: [A]
+                  reducer:
+                    params: []
+                    type: last
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is above 0.1 errors/sec for 5 minutes"
