@@ -28,7 +28,7 @@ jobs:
       - name: Run MLflow training
         run: |
           cd MLProject
-          mlflow run . --no-conda
+          mlflow run . --env-manager local
 
       - name: Upload MLflow artifacts
         if: always()
