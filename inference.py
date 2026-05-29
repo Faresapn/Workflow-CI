@@ -94,20 +94,17 @@ MODEL_INFO = Info("model", "Information about the loaded model")
 
 app = Flask(__name__)
 
-
-@app.before_first_request
-def initialize():
-    load_model()
-    # Estimate model memory usage
-    model_size = os.path.getsize(MODEL_PATH)
-    MODEL_MEMORY_USAGE.set(model_size)
-    MODEL_INFO.info(
-        {
-            "name": "Mushroom_RF_Classifier",
-            "version": "1.0.0",
-            "features": str(model.n_features_in_) if hasattr(model, "n_features_in_") else "unknown",
-        }
-    )
+# Initialize model on startup (replaces deprecated before_first_request)
+load_model()
+model_size = os.path.getsize(MODEL_PATH)
+MODEL_MEMORY_USAGE.set(model_size)
+MODEL_INFO.info(
+    {
+        "name": "Mushroom_RF_Classifier",
+        "version": "1.0.0",
+        "features": str(model.n_features_in_) if hasattr(model, "n_features_in_") else "unknown",
+    }
+)
 
 
 @app.route("/predict", methods=["POST"])
