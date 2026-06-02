@@ -17,3 +17,14 @@ mlflow.db
 model/
 model.pkl
 .venv/
+Dockerfile
+docker-compose.yml
+export_model.py
+generate_traffic.py
+inference.py
+prometheus.yml
+requirements_monitoring.txt
+grafana/
+model/
+mlruns/
+mlflow.db
