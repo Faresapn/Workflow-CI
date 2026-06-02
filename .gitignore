@@ -12,3 +12,8 @@ build/
 Thumbs.db
 *.log
 confusion_matrix.csv
+mlflow.db
+*.db
+model/
+model.pkl
+.venv/

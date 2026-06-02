@@ -1,0 +1,52 @@
+# Workflow CI/CD — Mushroom Classification
+# Repository: https://github.com/Faresapn/Workflow-CI
+
+## Tautan Repository GitHub
+https://github.com/Faresapn/Workflow-CI
+
+## Status Workflow
+Workflow GitHub Actions telah dijalankan dan berhasil (Passed).
+Link Actions: https://github.com/Faresapn/Workflow-CI/actions
+
+## Pipeline Overview
+1. Push code ke GitHub (branch main)
+2. GitHub Actions trigger otomatis
+3. Install dependencies (pip)
+4. Jalankan MLflow project (modelling.py)
+5. Log metrics & artifacts ke MLflow
+
+## GitHub Actions Workflow
+File: .github/workflows/workflow-ci.yml
+- Trigger: push ke main branch, pull request, dan workflow_dispatch
+- Environment: Ubuntu latest, Python 3.9
+- Steps:
+  1. Checkout repository
+  2. Set up Python 3.9
+  3. Install dependencies (mlflow, scikit-learn, pandas, numpy, dll)
+  4. Run MLflow training (mlflow run . --env-manager local)
+  5. Upload artifacts (mlruns/, model files)
+
+## Struktur Repository
+Workflow-CI/
+├── .github/
+│   └── workflows/
+│       └── workflow-ci.yml        # GitHub Actions workflow
+├── MLProject/
+│   ├── modelling.py               # Training script (Random Forest)
+│   ├── conda.yaml                 # Conda environment definition
+│   ├── MLProject                  # MLflow project config
+│   └── mushrooms_preprocessed/    # Dataset preprocessing
+│       └── mushrooms_preprocessed.csv
+├── README.md
+└── .gitignore
+
+## MLflow Tracking
+- Experiment: Mushroom_Classification_Baseline
+- Autolog: enabled (metrics, params, artifacts)
+- Logged metrics: accuracy, precision, recall, f1
+- Artifacts: confusion_matrix.csv, model.pkl
+
+## Tools Used
+- GitHub Actions (CI/CD automation)
+- MLflow (experiment tracking + model registry)
+- scikit-learn (Random Forest Classifier)
